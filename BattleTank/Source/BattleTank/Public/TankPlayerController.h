@@ -22,13 +22,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
-
-private:
-
 	ATank* GetControlledTank() const;
 
 	// Start the tank moving the barrel so that a shot would hit where
 	// the crosshair intersects the world
 	void AimTowardsCrosshair();
 
+private:
+
+	// Return an OUT parameter, true if hit landscape
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 };
