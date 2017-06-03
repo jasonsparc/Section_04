@@ -21,7 +21,6 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
 }
 
 
@@ -35,7 +34,26 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 
 void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
+	if (!Barrel) { return; }
+	
+	FVector LaunchVelocity;
+	// The socket location for "Projectile" or the component location if none otherwise
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	if (UGameplayStatics::SuggestProjectileVelocity(this,
+		LaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed,
+		false, // Chooses the Low Arc
+		0, // Radius of the projectile/bullet (assumed spherical)
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace))
+	{
+		auto AimDirection = LaunchVelocity.GetSafeNormal();
+		auto TankName = GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
+	}
 }
 
 void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet) {
