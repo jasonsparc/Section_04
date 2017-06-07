@@ -14,24 +14,6 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	// ...
-}
-
 void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
@@ -40,7 +22,9 @@ void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 	// The socket location for "Projectile" or the component location if none otherwise
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
-	if (UGameplayStatics::SuggestProjectileVelocity(this,
+	bool bHasAimSolution = UGameplayStatics::SuggestProjectileVelocity
+	(
+		this,
 		LaunchVelocity,
 		StartLocation,
 		HitLocation,
@@ -48,14 +32,30 @@ void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 		false, // Chooses the Low Arc
 		0, // Radius of the projectile/bullet (assumed spherical)
 		0,
-		ESuggestProjVelocityTraceOption::DoNotTrace))
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	);
+
+	if (bHasAimSolution)
 	{
 		auto AimDirection = LaunchVelocity.GetSafeNormal();
-		auto TankName = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
+		MoveBarrelTowards(AimDirection);
 	}
 }
 
 void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet) {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	// Work-out difference between current barrel rotation, and AimDirection
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *DeltaRotator.ToString());
+
+	// Move the barrel the right amount this frame
+
+	// Given a max elevation speed, and the frame time
+
 }
