@@ -59,11 +59,15 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 		// UE_LOG(LogTemp, Warning, TEXT("Look location: %s"), *LookLocation.ToString());
 		// UE_LOG(LogTemp, Warning, TEXT("Camera location: %s"), *PlayerCameraManager->GetCameraLocation().ToString());
 
+		FCollisionQueryParams QueryParams;
+		QueryParams.AddIgnoredActor(GetPawn());
+
 		bool DidHit = GetWorld()->LineTraceSingleByChannel(
 			HitResult,
 			LookLocation,
 			EndTrace,
-			ECollisionChannel::ECC_Visibility
+			ECollisionChannel::ECC_Visibility,
+			QueryParams
 		);
 
 		if (DidHit) {
