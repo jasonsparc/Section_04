@@ -39,6 +39,4 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z; /// May also be "^" since it's overloaded
 	IntendTurnRight(RightThrow); /// For a different solution, see https://www.udemy.com/unrealcourse/learn/v4/questions/1538646
-
-	///UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s"), *GetOwner()->GetName(), *MoveVelocity.ToString());
 }
