@@ -21,6 +21,8 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	virtual void BeginPlay() override;
+
 	void AimAt(const FVector& HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
