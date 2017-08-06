@@ -8,7 +8,6 @@
 // Forward declarations
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -22,16 +21,8 @@ public:
 
 	virtual void BeginPlay() override;
 
-	void AimAt(const FVector& HitLocation);
-
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
-
-protected:
-	// TODO Remove this variable
-	// Not actually used. The original one is in BP, not here. This is always null!
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
