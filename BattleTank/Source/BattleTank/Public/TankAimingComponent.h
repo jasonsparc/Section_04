@@ -26,6 +26,10 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 	void AimAt(const FVector& HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
@@ -36,7 +40,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Locked;
+	EFiringState FiringState = EFiringState::Reloading;
 	
 private:
 	// Sets default values for this component's properties
