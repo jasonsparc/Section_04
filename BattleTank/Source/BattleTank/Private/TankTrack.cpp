@@ -11,6 +11,17 @@ UTankTrack::UTankTrack()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+void UTankTrack::BeginPlay()
+{
+	/// Note: events can be registered at "constructor" as well
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
+
+void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s: I'm hit %s"), *GetOwner()->GetName(), *GetName());
+}
+
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
