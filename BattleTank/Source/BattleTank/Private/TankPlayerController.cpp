@@ -17,6 +17,9 @@ void ATankPlayerController::BeginPlay()
 
 void ATankPlayerController::Tick(float DeltaSeconds)
 {
+	// See, https://answers.unrealengine.com/questions/538020/4141-playercontroller-tick-function-being-called-w.html
+	if (GetWorld()->WorldType == EWorldType::EditorPreview) return;
+
 	Super::Tick( DeltaSeconds );
 
 	AimTowardsCrosshair();
