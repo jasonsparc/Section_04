@@ -76,7 +76,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	}
 
 	OutHitLocation = FVector(0);
-	return true;
+	return false; // Line trace didn't succeed
 }
 
 bool ATankPlayerController::GetLookDirection(FVector& LookLocation, FVector& LookDirection) const
