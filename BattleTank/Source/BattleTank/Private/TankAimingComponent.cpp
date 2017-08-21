@@ -50,6 +50,11 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Turret = TurretToSet;
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 void UTankAimingComponent::AimAt(const FVector & HitLocation)
 {
 	if (!ensure(Barrel && Turret)) { return; }
