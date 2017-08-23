@@ -63,5 +63,5 @@ Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-# Starter Content
-Content/StarterContent
+# Starter Content (uncomment to enable gitignore)
+#Content/StarterContent
