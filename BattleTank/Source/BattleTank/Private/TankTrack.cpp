@@ -13,7 +13,8 @@ UTankTrack::UTankTrack()
 
 void UTankTrack::BeginPlay()
 {
-	/// Note: events can be registered at "constructor" as well
+	/// Note: Registering events at "constructor" might be a bad idea. See,
+	/// https://answers.unrealengine.com/questions/387250/event-is-called-twice-when-bound-in-constructor-c.html
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
