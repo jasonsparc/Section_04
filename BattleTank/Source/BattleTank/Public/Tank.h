@@ -5,10 +5,6 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h" // Always put includes before this one
 
-// Forward declarations
-class UTankBarrel;
-class UTankTurret;
-
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
