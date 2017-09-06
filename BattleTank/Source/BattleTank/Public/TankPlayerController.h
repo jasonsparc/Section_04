@@ -22,6 +22,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
@@ -44,4 +46,7 @@ private:
 	float LineTraceRange = 1000000; // 10km in cm
 
 	bool GetLookDirection(FVector& LookLocation, FVector& LookDirection) const;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };
